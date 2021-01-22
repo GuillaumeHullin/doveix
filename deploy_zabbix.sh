@@ -47,3 +47,5 @@ regex_array[8]="s|PS_BIN=.*|PS_BIN=\"${PS_BIN}\"|g"
 for index in ${!regex_array[*]}; do
     sed -i "${regex_array[${index}]}" ${SCRIPT_CONFIG}
 done
+
+systemctl restart zabbix-agent.service
