@@ -1,1 +1,1 @@
-zabbix ALL=(root) NOPASSWD: /usr/bin/doveadm *, /usr/sbin/dovecot --version, /usr/bin/lsof *, /usr/bin/ps *
+zabbix ALL=(root) NOPASSWD: /usr/bin/doveadm *, /usr/sbin/dovecot --version, /usr/bin/lsof *, /usr/bin/ps *, /usr/bin/du *
