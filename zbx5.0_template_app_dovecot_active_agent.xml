@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>5.0</version>
-    <date>2021-01-08T13:28:39Z</date>
+    <date>2021-01-22T15:09:00Z</date>
     <groups>
         <group>
-            <name>Templates/Applications</name>
+            <name>Templates/Futur-Tech</name>
         </group>
     </groups>
     <templates>
         <template>
             <template>Template App Dovecot</template>
             <name>Template App Dovecot</name>
+            <description>https://github.com/GuillaumeHullin/doveix</description>
             <groups>
                 <group>
-                    <name>Templates/Applications</name>
+                    <name>Templates/Futur-Tech</name>
                 </group>
             </groups>
             <applications>
@@ -24,6 +25,7 @@
             <items>
                 <item>
                     <name>[Doveix] Account: Mailbox</name>
+                    <type>ZABBIX_ACTIVE</type>
                     <key>doveix[account, examine, INBOX]</key>
                     <delay>1h</delay>
                     <history>30d</history>
@@ -42,6 +44,7 @@
                 </item>
                 <item>
                     <name>[Doveix] Account: Login</name>
+                    <type>ZABBIX_ACTIVE</type>
                     <key>doveix[account, login]</key>
                     <delay>10m</delay>
                     <history>30d</history>
@@ -62,6 +65,7 @@
                 </item>
                 <item>
                     <name>[Doveix] Replication: Failed</name>
+                    <type>ZABBIX_ACTIVE</type>
                     <key>doveix[replication, failed]</key>
                     <history>1w</history>
                     <trends>90d</trends>
@@ -81,6 +85,7 @@
                 </item>
                 <item>
                     <name>[Doveix] Service: TLS Certificate - Expires</name>
+                    <type>ZABBIX_ACTIVE</type>
                     <key>doveix[service, cert, expires]</key>
                     <delay>1d</delay>
                     <history>1w</history>
@@ -101,6 +106,7 @@
                 </item>
                 <item>
                     <name>[Doveix] Service: Listen</name>
+                    <type>ZABBIX_ACTIVE</type>
                     <key>doveix[service, listen]</key>
                     <delay>5m</delay>
                     <history>30d</history>
@@ -130,6 +136,7 @@
                 </item>
                 <item>
                     <name>[Doveix] Service: Uptime</name>
+                    <type>ZABBIX_ACTIVE</type>
                     <key>doveix[service, uptime]</key>
                     <delay>10m</delay>
                     <history>30d</history>
@@ -151,6 +158,7 @@
                 </item>
                 <item>
                     <name>[Doveix] Service: Version</name>
+                    <type>ZABBIX_ACTIVE</type>
                     <key>doveix[service, version]</key>
                     <delay>1d</delay>
                     <history>1w</history>
@@ -164,6 +172,7 @@
                 </item>
                 <item>
                     <name>[Doveix] Users: Clients</name>
+                    <type>ZABBIX_ACTIVE</type>
                     <key>doveix[users, clients]</key>
                     <delay>5m</delay>
                     <history>30d</history>
@@ -176,6 +185,7 @@
                 </item>
                 <item>
                     <name>[Doveix] Users: Connected</name>
+                    <type>ZABBIX_ACTIVE</type>
                     <key>doveix[users, connected]</key>
                     <delay>5m</delay>
                     <history>30d</history>
@@ -187,6 +197,45 @@
                     </applications>
                 </item>
             </items>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>Dovecot mail userfolder discovery</name>
+                    <type>ZABBIX_ACTIVE</type>
+                    <key>vfs.file.contents[/etc/dovecot/users]</key>
+                    <delay>6h</delay>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>[Doveix] Account Size: {#DOVECOT_USERFOLDER_PATH}</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>doveix.sizefolder[{#DOVECOT_USERFOLDER_PATH}]</key>
+                            <delay>10m</delay>
+                            <value_type>FLOAT</value_type>
+                            <units>KB</units>
+                            <applications>
+                                <application>
+                                    <name>Dovecot</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                    </item_prototypes>
+                    <preprocessing>
+                        <step>
+                            <type>JAVASCRIPT</type>
+                            <params>var lld = [];
+var lines = value.split(&quot;\n&quot;);
+var lines_num = lines.length;
+for (i = 0; i &lt; lines_num; i++)
+{
+  var row = {};
+  var path = lines[i].split(&quot;::&quot;)
+  row[&quot;{#DOVECOT_USERFOLDER_PATH}&quot;] = path[2]
+  lld.push(row);
+}
+return JSON.stringify(lld);</params>
+                        </step>
+                    </preprocessing>
+                </discovery_rule>
+            </discovery_rules>
             <macros>
                 <macro>
                     <macro>{$DOVECOT_CERT_EXPIRES}</macro>
