@@ -10,7 +10,7 @@ LSOF_BIN=$(which lsof)
 PS_BIN=$(which ps)
 
 DOVEIX_URI="${1:-imaps://localhost/}"
-DOVEIX_USER="${2:-test@localhost.com}"
+DOVEIX_USER="${2:-test@localhost}"
 DOVEIX_PASS="${3:-xxxxxx}" 
 CACHE_DIR="${4:-${PREFIX_DIR}/tmp}"
 CACHE_TTL="${5:-5}"
