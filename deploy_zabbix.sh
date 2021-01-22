@@ -29,7 +29,8 @@ fi
 cp -rpv "${SOURCE_DIR}/doveix/doveix.sh"             "${PREFIX_DIR}/"
 cp -rpv "${SOURCE_DIR}/doveix/doveix.conf.example"   "${SCRIPT_CONFIG}"
 cp -rpv "${SOURCE_DIR}/doveix/zabbix_agentd.conf"    "${ZABBIX_DIR}/zabbix_agentd.d/doveix.conf"
-cp -rpv "${SOURCE_DIR}/doveix/doveix.sudoers"        "${SUDOERS_DIR}/doveix"
+cp -rpv "${SOURCE_DIR}/doveix/doveix.sudoers"        "${SUDOERS_DIR}/zabbix-doveix"
+chmod 0440 ${SUDOERS_DIR}/zabbix-doveix
 
 regex_array[0]="s|DOVEIX_URI=.*|DOVEIX_URI=\"${DOVEIX_URI}\"|g"
 regex_array[1]="s|DOVEIX_USER=.*|DOVEIX_USER=\"${DOVEIX_USER}\"|g"
