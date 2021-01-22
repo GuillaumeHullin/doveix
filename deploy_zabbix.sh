@@ -11,7 +11,7 @@ PS_BIN=$(which ps)
 
 DOVEIX_URI="${1:-imaps://localhost/}"
 DOVEIX_USER="${2:-test@localhost.com}"
-DOVEIX_PASS="${3:-xxxxxx}"
+DOVEIX_PASS="${3:-$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)}" # generate a random string as password
 CACHE_DIR="${4:-${PREFIX_DIR}/tmp}"
 CACHE_TTL="${5:-5}"
 DOVEADM_BIN="${DOVEADM_BIN:-/usr/bin/doveadm}"
