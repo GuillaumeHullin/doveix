@@ -11,7 +11,7 @@ PS_BIN=$(which ps)
 
 DOVEIX_URI="${1:-imaps://localhost/}"
 DOVEIX_USER="${2:-test@localhost.com}"
-DOVEIX_PASS="${3:-$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)}" # generate a random string as password
+DOVEIX_PASS="${3:-xxxxxx}" 
 CACHE_DIR="${4:-${PREFIX_DIR}/tmp}"
 CACHE_TTL="${5:-5}"
 DOVEADM_BIN="${DOVEADM_BIN:-/usr/bin/doveadm}"
@@ -20,6 +20,9 @@ LSOF_BIN="${LSOF_BIN:-/usr/bin/lsof}"
 PS_BIN="${PS_BIN:-/usr/bin/ps}"
 
 mkdir -p "${PREFIX_DIR}"
+if [[ $DOVEIX_PASS == "xxxxxx" ]]; then
+    DOVEIX_PASS=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1) # generate a random string as password
+fi
 
 SCRIPT_CONFIG="${PREFIX_DIR}/doveix.conf"
 if [[ -f "${SCRIPT_CONFIG}" ]]; then
