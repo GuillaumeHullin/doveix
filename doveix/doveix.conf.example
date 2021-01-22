@@ -1,7 +1,7 @@
 CACHE_TTL="5"
 CACHE_DIR="/tmp/keepax/"
 DOVEIX_URI="imaps://localhost/"
-DOVEIX_USER="test@localhost.com"
+DOVEIX_USER="test@localhost"
 DOVEIX_PASS="xxxxxx"
 DOVEADM_BIN="/usr/bin/doveadm"
 DOVECOT_BIN="/usr/sbin/dovecot"
